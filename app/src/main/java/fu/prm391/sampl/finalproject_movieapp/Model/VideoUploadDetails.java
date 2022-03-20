@@ -1,8 +1,8 @@
 package fu.prm391.sampl.finalproject_movieapp.Model;
 
 public class VideoUploadDetails {
+    private String videoId;
     private String videoSlide, videoType, videoThumb, videoUrl, videoName, videoDescription, videoCategory;
-
     public VideoUploadDetails(String videoSlide, String videoType, String videoThumb, String videoUrl, String videoName, String videoDescription, String videoCategory) {
         this.videoSlide = videoSlide;
         this.videoType = videoType;
@@ -13,7 +13,27 @@ public class VideoUploadDetails {
         this.videoCategory = videoCategory;
     }
 
+    public VideoUploadDetails(String videoId, String videoSlide, String videoType, String videoThumb, String videoUrl, String videoName, String videoDescription, String videoCategory) {
+        this.videoSlide = videoSlide;
+        this.videoType = videoType;
+        this.videoThumb = videoThumb;
+        this.videoUrl = videoUrl;
+        this.videoName = videoName;
+        this.videoDescription = videoDescription;
+        this.videoCategory = videoCategory;
+        this.videoId = videoId;
+    }
+
+
     public VideoUploadDetails() {
+    }
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
     }
 
     public String getVideoSlide() {

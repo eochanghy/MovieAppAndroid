@@ -21,8 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fu.prm391.sampl.finalproject_movieapp.Model.VideoUploadDetails;
+import fu.prm391.sampl.finalproject_movieapp.Util.Generator;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     static final String NO_VIDEO = "No video selected";
@@ -61,17 +65,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner.setOnItemSelectedListener(this);
         referenceVideo = FirebaseDatabase.getInstance().getReference().child("videos");
         mstorafeRef = FirebaseStorage.getInstance().getReference().child("videos");
-        categories = new ArrayList<>();
-        categories.add("Action");
-        categories.add("Adventure");
-        categories.add("Sports");
-        categories.add("Romantic");
-        categories.add("Comedy");
+        initCategory();
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, categories);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
+    }
+
+    private void initCategory() {
+        categories = new ArrayList<>();
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading..");
+        progressDialog.show();
+        DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference().child("category");
+        categoryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot item: snapshot.getChildren()) {
+                    categories.add(item.getValue(String.class));
+                }
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(MainActivity.this,
+                        android.R.layout.simple_spinner_item, categories);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(dataAdapter);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -89,12 +110,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void openVideoFiles(View view) {
         if (Build.VERSION.SDK_INT < 19) {
             final Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/* video/*");
+            photoPickerIntent.setType("video/*");
             startActivityForResult(photoPickerIntent, 101);
         } else {
             final Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("*/*");
-            photoPickerIntent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
+            photoPickerIntent.setType("video/*");
+            photoPickerIntent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/*"});
             startActivityForResult(photoPickerIntent, 101);
         }
     }
@@ -124,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //            int columnIndexData = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
             while (cursor.moveToNext()) {
                 @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
-                System.out.println("Path: "+ path);
                 videoTitle = FilenameUtils.getBaseName(path);
             }
             txtVideoSelected.setText(videoTitle);
@@ -146,11 +166,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void uploadFile() {
         if(videoUri != null) {
-            System.out.println("Video Uri: "+videoUri);
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Video uploading...");
             progressDialog.show();
             final StorageReference storageReference = mstorafeRef.child(videoTitle);
+            Generator generator = new Generator();
             mUploadTask = storageReference.putFile(videoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -159,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         public void onSuccess(Uri uri) {
                             String videoUrl = uri.toString();
                             VideoUploadDetails videoUploadDetails = new VideoUploadDetails(
+                                    referenceVideo.push().getKey(),
                                     "",
                                     "",
                                     "",
