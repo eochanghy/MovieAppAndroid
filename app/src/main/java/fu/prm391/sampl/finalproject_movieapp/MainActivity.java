@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private StorageTask mUploadTask;
     private DatabaseReference referenceVideo;
     private EditText videoDescription;
+    private TextView videoName;
     private Spinner spinner;
     private List<String> categories;
     @Override
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         txtVideoSelected = findViewById(R.id.textVideoSelected);
         videoDescription = findViewById(R.id.movieDescription);
+        videoName = findViewById(R.id.movieName);
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
         referenceVideo = FirebaseDatabase.getInstance().getReference().child("videos");
@@ -184,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                     "",
                                     "",
                                     videoUrl,
-                                    videoTitle,
+                                    videoName.getText().toString(),
                                     videoDescription.getText().toString(),
                                     videoCategory
                                     );
