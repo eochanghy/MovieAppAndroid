@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="277dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -36,6 +36,7 @@
                 android:id="@+id/btnUploadVideo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccent"
                 android:onClick="openVideoFiles"
                 android:text="Upload Video" />
 
@@ -52,6 +53,7 @@
             android:id="@+id/movieName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Movie Name"
             android:inputType="textPersonName" />
@@ -60,13 +62,15 @@
             android:id="@+id/movieDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="Movie Description" />
+            android:layout_marginTop="20dp"
+            android:hint="Movie Description"
+            android:overScrollMode="ifContentScrolls" />
 
         <Button
             android:id="@+id/btnUpload"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
             android:onClick="uploadFiletoFireBase"
             android:text="Upload"
 

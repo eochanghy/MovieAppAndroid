@@ -175,6 +175,9 @@ public class UploadThumbnailActivity extends AppCompatActivity {
                             updateDataRef.child("videoThumb").setValue(thumbnailUrl);
                             progressDialog.dismiss();
                             Toast.makeText(UploadThumbnailActivity.this, "File uploaded", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(UploadThumbnailActivity.this, FirstActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
                         }
                     });
                 }
