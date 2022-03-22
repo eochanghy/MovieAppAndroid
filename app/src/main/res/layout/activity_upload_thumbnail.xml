@@ -54,6 +54,8 @@
                 android:layout_height="wrap_content"
                 android:text="Upload Thumbnail"
                 android:onClick="showImageChooser"
+                android:backgroundTint="@color/colorAccent"
+                android:padding="10dp"
                 />
             <TextView
                 android:id="@+id/txtThumbSelected"
@@ -72,6 +74,8 @@
             android:id="@+id/btnUpload"
             android:textStyle="bold"
             android:onClick="uploadFileToFirebase"
+            android:backgroundTint="@color/colorAccent"
+            android:padding="15dp"
             />
         <ImageView
             android:layout_width="150dp"

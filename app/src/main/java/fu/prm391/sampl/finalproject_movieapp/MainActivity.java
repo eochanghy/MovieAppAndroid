@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         } else {
             if(mUploadTask != null && mUploadTask.isInProgress()) {
-                Toast.makeText(this, "Video uploads is all ready in progrress", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Video uploads is all ready in progress", Toast.LENGTH_SHORT).show();
             } else {
                 uploadFile();
             }
