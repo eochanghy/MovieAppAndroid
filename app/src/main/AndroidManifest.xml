@@ -10,10 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject_MovieApp">
         <activity
-            android:name=".UploadThumbnailActivity"
+            android:name=".UpdateMovieActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UploadThumbnailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CRUDmovieActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

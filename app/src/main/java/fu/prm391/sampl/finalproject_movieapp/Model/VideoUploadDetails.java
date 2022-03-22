@@ -1,6 +1,8 @@
 package fu.prm391.sampl.finalproject_movieapp.Model;
 
-public class VideoUploadDetails {
+import java.io.Serializable;
+
+public class VideoUploadDetails implements Serializable {
     private String videoId;
     private String videoSlide, videoType, videoThumb, videoUrl, videoName, videoDescription, videoCategory;
     public VideoUploadDetails(String videoSlide, String videoType, String videoThumb, String videoUrl, String videoName, String videoDescription, String videoCategory) {

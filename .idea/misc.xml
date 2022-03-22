@@ -5,6 +5,9 @@
       <map>
         <entry key="..\:/FPT_University/Spring2022/PRM391/FinalProject_MovieApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/FPT_University/Spring2022/PRM391/FinalProject_MovieApp/app/src/main/res/layout/activity_upload_thumbnail.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ADMIN/Desktop/PHEPHIM/Admin/MovieAppAndroid/app/src/main/res/layout/activity_crud_movie.xml" value="0.26856884057971014" />
+        <entry key="..\:/Users/ADMIN/Desktop/PHEPHIM/Admin/MovieAppAndroid/app/src/main/res/layout/activity_update_movie.xml" value="0.26856884057971014" />
+        <entry key="..\:/Users/ADMIN/Desktop/PHEPHIM/Admin/MovieAppAndroid/app/src/main/res/layout/recyclerview_row.xml" value="0.26856884057971014" />
       </map>
     </option>
   </component>
