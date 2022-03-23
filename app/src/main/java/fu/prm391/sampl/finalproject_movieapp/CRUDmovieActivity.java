@@ -1,6 +1,8 @@
 package fu.prm391.sampl.finalproject_movieapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -65,6 +67,31 @@ public class CRUDmovieActivity extends AppCompatActivity {
 
                     @Override
                     public void onClickDeleteItem(VideoUploadDetails videoUploadDetails) {
+                        AlertDialog diaBox = AskOption(videoUploadDetails);
+                        diaBox.show();
+                    }
+                });
+                recyclerView.setAdapter(adapter);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private AlertDialog AskOption(VideoUploadDetails videoUploadDetails)
+    {
+        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
+                .setTitle("Delete")
+                .setMessage("Do you want to Delete")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        // delete code
                         DatabaseReference videoRef2;
                         videoRef2 = FirebaseDatabase.getInstance().getReference().child("videos");
                         videoRef2.addValueEventListener(new ValueEventListener() {
@@ -82,16 +109,21 @@ public class CRUDmovieActivity extends AppCompatActivity {
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
+                        //
+
+                        dialog.dismiss();
                     }
-                });
-                recyclerView.setAdapter(adapter);
-                progressDialog.dismiss();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+
+        return myQuittingDialogBox;
     }
 }
